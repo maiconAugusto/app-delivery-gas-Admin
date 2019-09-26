@@ -1,4 +1,4 @@
-import React, { useState} from 'react'
+import React, { useState, useEffect} from 'react'
 import {View ,
     Text, 
     TextInput, 
@@ -9,11 +9,12 @@ import {View ,
     from 'react-native';
 import firebase from 'firebase'
 
+
 const Login = ({navigation})=>{
     const [ email, setEmail ] = useState('')
     const [ password, setPassword ] = useState('')
     const [ spinner, setSpinner ] = useState('')
-
+    
     async function handleLogin(){
         setSpinner(true)
         const response = await firebase.auth().signInWithEmailAndPassword(email, password)

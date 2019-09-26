@@ -1,8 +1,16 @@
-import React from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native'
+import React, { useEffect } from 'react'
+import { View, Text, StyleSheet, TouchableOpacity, Image, AsyncStorage} from 'react-native'
 import Icon from '../assets/Icon.png'
 
 const Initial = ({navigation})=>{
+    useEffect(()=>{
+        async function handleVerificLogger(){
+            AsyncStorage.getItem('Email').then(()=>{
+                navigation.navigate('Main')
+            })
+        }
+        handleVerificLogger()
+    },[])
     return(
         <View style={styles.container}>
             <View style={styles.logo}>

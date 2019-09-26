@@ -3,6 +3,7 @@ import { createStackNavigator } from 'react-navigation-stack'
 import Login from './screens/Login'
 import Initial from './screens/Initial'
 import Main from './screens/Main'
+import Client from './screens/Client'
 
 const Routers = createStackNavigator({
     Initial:{
@@ -18,6 +19,11 @@ const Routers = createStackNavigator({
     Main:{
         screen: Main, navigationOptions:{
             header: null
+        }
+    },
+    ProfileClient:{
+        screen: Client, navigationOptions:{
+            
         }
     }
 })
