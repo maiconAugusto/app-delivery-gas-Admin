@@ -5,16 +5,16 @@ import {View ,
     TouchableOpacity, 
     StyleSheet, 
     ActivityIndicator, 
-    AsyncStorage } 
+    AsyncStorage,
+    } 
     from 'react-native';
 import firebase from 'firebase'
-
 
 const Login = ({navigation})=>{
     const [ email, setEmail ] = useState('')
     const [ password, setPassword ] = useState('')
     const [ spinner, setSpinner ] = useState('')
-    
+
     async function handleLogin(){
         setSpinner(true)
         const response = await firebase.auth().signInWithEmailAndPassword(email, password)

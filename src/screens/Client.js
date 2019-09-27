@@ -29,15 +29,24 @@ const Client = ({navigation})=>{
         const response = await firebase.database().ref(`/Pedidos/${navigation.getParam('id')}`).update({
             delivered: true
         })
+        .then(()=>{
+            firebase.database().ref(`/Pedido/Users/${navigation.getParam('id')}`).update({
+                delivered: true
+            })
+        })
     }
     async function handleCancelad(){
         const response = await firebase.database().ref(`/Pedidos/${navigation.getParam('id')}`).set(null)
+            .then(()=>{
+                firebase.database().ref(`/Pedido/Users/${navigation.getParam('id')}`).set(null)
+            })
     }
     return(
         <View style={styles.container}>
             <FlatList
             data={data}
             renderItem={({item})=> handleClientInfo(item)}
+            keyExtractor={(item,index)=> index.toString()}
             />
             <View style={styles.btn}>
                 <TouchableOpacity 

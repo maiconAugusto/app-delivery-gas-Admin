@@ -1,16 +1,13 @@
-import React,{useState, useEffect} from 'react'
-import { View, StyleSheet, FlatList, Text, BackHandler, TouchableOpacity, AsyncStorage} from 'react-native'
+import React,{useState, useEffect, Fragment} from 'react'
+import { View, StyleSheet, FlatList, Text, BackHandler, TouchableOpacity, AsyncStorage, ActivityIndicator} from 'react-native'
 import { CirclesRotationScaleLoader } from 'react-native-indicator'
 import firebase, { app } from "firebase"
 import _ from 'lodash'
-import { existsTypeAnnotation } from '@babel/types'
 
 const Home = ({navigation})=>{
     const [ shoppings, setShoppings ] = useState([])
-    const [ loading, setLoading ] = useState('')
 
     useEffect(()=>{
-        setLoading(true)
             async function handleShopping(){
                 const response = await firebase.database().ref('/Pedidos/')
                     .on('value',snapshot=>{
@@ -19,11 +16,6 @@ const Home = ({navigation})=>{
             }
         handleShopping()
     },[])
-    useEffect(()=>{
-        BackHandler.addEventListener('hardwareBackPress',function(){
-            BackHandler.exitApp()
-        })
-    })
     function handleLogoff(){
         AsyncStorage.removeItem('Email')
             .then(()=>{
@@ -83,11 +75,13 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
         color: 'white',
-        marginBottom: 8
+        marginBottom: 8,
+        textTransform :'uppercase'
     },
     info:{
         color: 'white',
-        fontSize: 16
+        fontSize: 16,
+        textTransform: 'uppercase'
     },
     header:{
         padding: 12,

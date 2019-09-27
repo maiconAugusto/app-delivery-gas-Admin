@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React , {  useEffect }from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, Image, AsyncStorage} from 'react-native'
 import Icon from '../assets/Icon.png'
 
@@ -6,7 +6,7 @@ const Initial = ({navigation})=>{
     useEffect(()=>{
         async function handleVerificLogger(){
             AsyncStorage.getItem('Email').then(()=>{
-                navigation.navigate('Main')
+                navigation.navigate('HOME')
             })
         }
         handleVerificLogger()
