@@ -4,6 +4,7 @@ import Login from './screens/Login'
 import Initial from './screens/Initial'
 import Main from './screens/Main'
 import Client from './screens/Client'
+import MapClient from './screens/Map'
 
 const Routers = createStackNavigator({
     Initial:{
@@ -25,6 +26,9 @@ const Routers = createStackNavigator({
         screen: Client, navigationOptions:{
             
         }
+    },
+    Map:{
+        screen: MapClient
     }
 })
 

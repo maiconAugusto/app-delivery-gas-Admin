@@ -22,8 +22,7 @@ const Initial = ({navigation})=>{
             <View style={styles.btn}>
                 <TouchableOpacity 
                 style={styles.logger}
-                onPress={()=> navigation.navigate('Login')}
-                >
+                onPress={()=> navigation.navigate('Login')}>
                     <Text style={styles.text_btn_login}>Login</Text>
                 </TouchableOpacity>
             </View>

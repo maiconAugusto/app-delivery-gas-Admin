@@ -16,6 +16,7 @@ const Home = ({navigation})=>{
             }
         handleShopping()
     },[])
+    
     function handleLogoff(){
         AsyncStorage.removeItem('Email')
             .then(()=>{
@@ -27,20 +28,21 @@ const Home = ({navigation})=>{
             return(
                 <TouchableOpacity onPress={()=> 
                     navigation.navigate('ProfileClient',{ 
-                        id: item.user, date: item.request_date, quantity: item.quantity
+                        id: item.user , date: item.request_date, quantity: item.quantity
                     })}>
                     <View style={styles.historic}>
                         <Text style={styles.title}>Pedido</Text>
-                        <View style={styles.navHeader}>
-                            <Text style={styles.info}>Quantidade: {item.quantity}</Text>
-                            <Text style={styles.info}>Valor: {item.price}</Text>
-                        </View>
+                            <View style={styles.navHeader}>
+                                <Text style={styles.info}>Quantidade: {item.quantity}</Text>
+                                <Text style={styles.info}>Valor: {item.price}</Text>
+                            </View>
                     </View>
                 </TouchableOpacity>
             )
         }
     }
     return(
+        
         <View style={styles.container}>
             <View style={styles.header}>
                 <TouchableOpacity onPress={()=> handleLogoff()}>

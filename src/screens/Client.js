@@ -1,23 +1,34 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, StyleSheet, FlatList, TouchableOpacity  } from 'react-native'
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image, AsyncStorage  } from 'react-native'
 import firebase from 'firebase'
 import _ from 'lodash'
+import Icon from '../assets/Icon.png'
 
 
 const Client = ({navigation})=>{
-    const [ data, setData ] = useState([])
+    const [ data, setData ] = useState('')
+
     useEffect(()=>{
         async function handleClient(){
-            const response = await firebase.database().ref(`/Users/${navigation.getParam('id')}`)
-                .on('value', snapshot=>{
+            const response =  firebase.database().ref(`/Users/${navigation.getParam('id')}`)
+                .once('value',snapshot=>{
                     setData(_.values(snapshot.val()))
                 })
         }
         handleClient()
     },[])
+
     function handleClientInfo(item){
         return(
             <View style={styles.infoUser}>
+                <TouchableOpacity style={{alignItems:'center', marginBottom:10}}
+                    onPress={()=> navigation.navigate('Map',{latitude: parseFloat(item.geolocalization.latitude),
+                                                             longitude: parseFloat(item.geolocalization.longitude),
+                                                             name: item.name,
+                    })}
+                    >
+                    <Image source={Icon} style={{width: 100, height:100}}/>
+                </TouchableOpacity>
                 <Text style={styles.info}>Nome: {item.name}</Text>
                 <Text style={styles.info}>Telefone: {item.phone}</Text>
                 <Text style={styles.info}>Quantidade: {navigation.getParam('quantity')}</Text>
@@ -27,12 +38,10 @@ const Client = ({navigation})=>{
     }
     async function handleConfirm(){
         const response = await firebase.database().ref(`/Pedidos/${navigation.getParam('id')}`).update({
-            delivered: true
-        })
+            delivered: true })
         .then(()=>{
             firebase.database().ref(`/Pedido/Users/${navigation.getParam('id')}`).update({
-                delivered: true
-            })
+                delivered: true })
         })
     }
     async function handleCancelad(){
