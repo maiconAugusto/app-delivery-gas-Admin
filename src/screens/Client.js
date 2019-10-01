@@ -40,8 +40,9 @@ const Client = ({navigation})=>{
         const response = await firebase.database().ref(`/Pedidos/${navigation.getParam('id')}`).update({
             delivered: true })
         .then(()=>{
-            firebase.database().ref(`/Pedido/Users/${navigation.getParam('id')}`).update({
-                delivered: true })
+            const response =  firebase.database().ref(`/Pedido/Users/${navigation.getParam('id')}`).update({
+                delivered: true
+            })
         })
     }
     async function handleCancelad(){

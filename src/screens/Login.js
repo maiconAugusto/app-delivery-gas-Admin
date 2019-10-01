@@ -14,6 +14,8 @@ const Login = ({navigation})=>{
     const [ email, setEmail ] = useState('')
     const [ password, setPassword ] = useState('')
     const [ spinner, setSpinner ] = useState('')
+    const [ loginError, setLoginError ] = useState("")
+    const [ erroMessage, setErroMessage ] = useState('')
 
     async function handleLogin(){
         setSpinner(true)
@@ -23,7 +25,14 @@ const Login = ({navigation})=>{
                     AsyncStorage.setItem('Email',email)
                         navigation.navigate('Main')         
             })
-            .catch(()=>{
+            .catch((err)=>{
+                if(err.code == 'auth/wrong-password') 
+                    return setSpinner(false), setLoginError(true), setErroMessage('senha inválida')
+                if(err.code == 'auth/user-not-found')
+                    return setSpinner(false), setLoginError(true), setErroMessage('usuário não existente')
+                if(err.code == 'auth/invalid-email')
+                    return setSpinner(false), setLoginError(true), setErroMessage('senha ou e-mail inválidos')
+                console.log(err)
                 setSpinner(false)
             })
     }
@@ -41,8 +50,17 @@ const Login = ({navigation})=>{
             </TouchableOpacity>
         )
     }
+    function handleError(){
+        setTimeout(function(){
+            setLoginError(false)
+        },2000)
+        return(
+            <Text style={styles.error}>{erroMessage}</Text>
+        )
+    }
     return(
         <View style={styles.container}>
+            { loginError == true ? handleError() : <></> }
             <TextInput
             style={styles.input}
             placeholder=" E-mail"
@@ -106,6 +124,13 @@ const styles = StyleSheet.create({
     spinners:{
         marginTop: 40,
         height: 50,
+    },
+    error:{
+        color: 'white',
+        textAlign:'center',
+        marginBottom: 6,
+        textTransform:'uppercase',
+        fontWeight:'bold'
     }
 })
 export default Login
